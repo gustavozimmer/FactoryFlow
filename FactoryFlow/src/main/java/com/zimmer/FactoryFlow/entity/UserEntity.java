@@ -2,13 +2,18 @@ package com.zimmer.FactoryFlow.entity;
 
 
 import jakarta.persistence.*;
-import lombok.Cleanup;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 @Table(name = "users")
 public class UserEntity {
     @Id
@@ -18,7 +23,7 @@ public class UserEntity {
     @Column(name = "name", length = 100, nullable = false)
     private String name;
 
-    @Column(name = "password_hash", length = 255, nullable = false)
+    @Column(name = "password_hash", nullable = false)
     private String passwordHash;
 
     @Column(name = "edv", length = 30, nullable = false, unique = true)
@@ -31,5 +36,12 @@ public class UserEntity {
     @JoinColumn(name = "role_id")
     private RoleEntity role;
 
+    @Column(name = "created_at")
+    @CreationTimestamp
+    private LocalDateTime createdAt;
+
+    @Column(name = "updated_at")
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
 
 }

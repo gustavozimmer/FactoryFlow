@@ -1,4 +1,7 @@
 package com.zimmer.FactoryFlow.repository;
 
-public class UserRepository {
+import com.zimmer.FactoryFlow.entity.UserEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface UserRepository extends JpaRepository<UserEntity, Long> {
 }
