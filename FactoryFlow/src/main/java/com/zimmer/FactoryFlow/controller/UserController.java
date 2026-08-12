@@ -1,16 +1,26 @@
 package com.zimmer.FactoryFlow.controller;
 
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.zimmer.FactoryFlow.dto.UserRequestDTO;
+import com.zimmer.FactoryFlow.dto.UserResponseDTO;
+import com.zimmer.FactoryFlow.service.UserService;
+import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
 @RequestMapping("/user")
 public class UserController {
-    @GetMapping
-    public String User(){
-        return "Olá Usuário";
+    @Autowired
+    private UserService userService;
+
+    @PostMapping
+    public ResponseEntity<UserResponseDTO> UserCreate(@RequestBody @Valid UserRequestDTO dto){
+        var user = userService.createUser(dto);
+        var uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(user.id()).toUri();
+        return ResponseEntity.created(uri).body(user);
     }
 
 }
