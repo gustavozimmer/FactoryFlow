@@ -15,7 +15,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/role")
+@RequestMapping("/roles")
 public class RoleController {
     private final RoleService roleService;
 
