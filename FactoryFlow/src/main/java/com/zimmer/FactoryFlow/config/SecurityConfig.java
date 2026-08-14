@@ -15,12 +15,13 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
-//When deploying, this function needs to be updated to follow best practices.
+
+    //When deploying, this function needs to be updated to follow best practices.
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/user", "/role").permitAll()
+                        .requestMatchers("/user", "/role", "/permission/**").permitAll()
                         .anyRequest().authenticated()
                 );
 
