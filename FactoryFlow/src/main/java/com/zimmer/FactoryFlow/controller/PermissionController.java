@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -42,7 +41,7 @@ public class PermissionController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PermissionResponseDTO> updatePermissionPermissionById(@PathVariable("id") Long id, @RequestBody @Valid PermissionRequestDTO dto){
+    public ResponseEntity<PermissionResponseDTO> updatePermissionById(@PathVariable("id") Long id, @RequestBody @Valid PermissionRequestDTO dto){
         var permission = permissionService.updatePermissionById(id,dto);
 
         return ResponseEntity.ok(permission);

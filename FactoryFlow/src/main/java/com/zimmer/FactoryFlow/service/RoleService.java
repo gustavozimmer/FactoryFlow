@@ -4,13 +4,16 @@ import com.zimmer.FactoryFlow.dto.RoleRequestDTO;
 import com.zimmer.FactoryFlow.dto.RoleResponseDTO;
 import com.zimmer.FactoryFlow.entity.RoleEntity;
 import com.zimmer.FactoryFlow.repository.RoleRepository;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class RoleService {
-    @Autowired
-    private RoleRepository roleRepository;
+
+    private final RoleRepository roleRepository;
 
     public RoleResponseDTO createRole(RoleRequestDTO dto){
         RoleEntity roleEntity = new RoleEntity();
