@@ -2,6 +2,7 @@ package com.zimmer.FactoryFlow.controller;
 
 import com.zimmer.FactoryFlow.dto.PermissionRequestDTO;
 import com.zimmer.FactoryFlow.dto.PermissionResponseDTO;
+import com.zimmer.FactoryFlow.dto.PermissionUpdateDTO;
 import com.zimmer.FactoryFlow.service.PermissionService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -32,12 +33,35 @@ public class PermissionController {
         return ResponseEntity.ok(permission);
     }
 
-    @PostMapping
+    @PostMapping()
     public ResponseEntity<PermissionResponseDTO> createPermission(@RequestBody @Valid PermissionRequestDTO dto){
         var permission = permissionService.createPermission(dto);
         var uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(permission.id()).toUri();
 
         return ResponseEntity.created(uri).body(permission);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<PermissionResponseDTO> updatePermissionPermissionById(@PathVariable("id") Long id, @RequestBody @Valid PermissionRequestDTO dto){
+        var permission = permissionService.updatePermissionById(id,dto);
+
+        return ResponseEntity.ok(permission);
+    }
+
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<PermissionResponseDTO> partialUpdatePermissionById(@PathVariable("id") Long id, @RequestBody PermissionUpdateDTO dto){
+        var permission = permissionService.partialUpdatePermissionById(id, dto);
+
+        return ResponseEntity.ok(permission);
+    }
+
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletePermissionById(@PathVariable("id") Long id){
+        permissionService.deletePermissionById(id);
+
+        return ResponseEntity.noContent().build();
     }
 
 }

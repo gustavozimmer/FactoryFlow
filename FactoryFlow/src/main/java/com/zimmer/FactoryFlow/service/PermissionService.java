@@ -2,6 +2,7 @@ package com.zimmer.FactoryFlow.service;
 
 import com.zimmer.FactoryFlow.dto.PermissionRequestDTO;
 import com.zimmer.FactoryFlow.dto.PermissionResponseDTO;
+import com.zimmer.FactoryFlow.dto.PermissionUpdateDTO;
 import com.zimmer.FactoryFlow.entity.PermissionEntity;
 import com.zimmer.FactoryFlow.repository.PermissionRepository;
 import lombok.RequiredArgsConstructor;
@@ -42,5 +43,35 @@ public class PermissionService {
                 .toList();
 
         return permissions;
+    }
+
+    public PermissionResponseDTO updatePermissionById(Long id, PermissionRequestDTO dto){
+        var permission = permissionRepository.findById(id).orElse(null);
+        permission.setName(dto.name());
+        permission.setDescription(dto.description());
+        var savedPermission = permissionRepository.save(permission);
+
+        return new PermissionResponseDTO(savedPermission.getName(), savedPermission.getDescription(), savedPermission.getId());
+    }
+
+    public PermissionResponseDTO partialUpdatePermissionById(Long id, PermissionUpdateDTO dto){
+        var permission = permissionRepository.findById(id).orElse(null);
+
+        if (dto.name() != null){
+            permission.setName(dto.name());
+        }
+        if (dto.description() != null){
+            permission.setDescription(dto.description());
+        }
+
+        var savedPermission = permissionRepository.save(permission);
+
+        return new PermissionResponseDTO(savedPermission.getName(), savedPermission.getDescription(), savedPermission.getId());
+
+    }
+
+    public void deletePermissionById(Long id){
+        var permission = permissionRepository.findById(id).orElse(null);
+        permissionRepository.delete(permission);
     }
 }
