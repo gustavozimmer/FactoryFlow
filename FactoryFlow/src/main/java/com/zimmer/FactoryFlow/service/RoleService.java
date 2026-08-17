@@ -3,7 +3,11 @@ package com.zimmer.FactoryFlow.service;
 import com.zimmer.FactoryFlow.dto.RoleRequestDTO;
 import com.zimmer.FactoryFlow.dto.RoleResponseDTO;
 import com.zimmer.FactoryFlow.dto.RoleUpdateDTO;
+import com.zimmer.FactoryFlow.entity.PermissionEntity;
+import com.zimmer.FactoryFlow.entity.PermissionRoleEntity;
 import com.zimmer.FactoryFlow.entity.RoleEntity;
+import com.zimmer.FactoryFlow.repository.PermissionRepository;
+import com.zimmer.FactoryFlow.repository.PermissionRoleRepository;
 import com.zimmer.FactoryFlow.repository.RoleRepository;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +21,8 @@ import java.util.List;
 public class RoleService {
 
     private final RoleRepository roleRepository;
+    private final PermissionRepository permissionRepository;
+    private final PermissionRoleRepository permissionRoleRepository;
 
     public RoleResponseDTO createRole(RoleRequestDTO dto){
         RoleEntity roleEntity = new RoleEntity();
@@ -76,6 +82,16 @@ public class RoleService {
     public void deleteRole(Long id){
         var role = roleRepository.findById(id).orElse(null);
         roleRepository.delete(role);
+    }
+
+
+    public void addPermissionToRole(Long roleId, Long permissionId){
+        PermissionRoleEntity permissionRoleEntity = new PermissionRoleEntity();
+        permissionRoleEntity.setPermission(permissionRepository.findById(permissionId).orElse(null));
+        permissionRoleEntity.setRole(roleRepository.findById(roleId).orElse(null));
+
+        permissionRoleRepository.save(permissionRoleEntity);
+
     }
 
 }
