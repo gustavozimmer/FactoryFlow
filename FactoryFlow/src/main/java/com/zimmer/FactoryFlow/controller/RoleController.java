@@ -67,7 +67,7 @@ public class RoleController {
     }
 
     @PostMapping("/{roleId}/permissions/{permissionId}")
-    public ResponseEntity<Void> addPermissionToRole(@PathVariable("roleId") Long roleId, @PathVariable Long permissionId){
+    public ResponseEntity<Void> addPermissionToRole(@PathVariable("roleId") Long roleId, @PathVariable("permissionId") Long permissionId){
         roleService.addPermissionToRole(roleId, permissionId);
 
         return ResponseEntity.noContent().build();
