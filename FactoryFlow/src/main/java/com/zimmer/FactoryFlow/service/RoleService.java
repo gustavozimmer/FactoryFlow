@@ -13,6 +13,7 @@ import com.zimmer.FactoryFlow.repository.RoleRepository;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -108,6 +109,13 @@ public class RoleService {
                         pr.getPermission().getId()
                 ))
                 .toList();
+    }
+
+    public ResponseEntity<Void> deletePermissionToRole(Long roleId, Long permissionId){
+        var permissionRole = permissionRoleRepository.findById(permissionId).orElse(null);
+        permissionRoleRepository.delete(permissionRole);
+
+        return ResponseEntity.ok().build();
     }
 
 }
