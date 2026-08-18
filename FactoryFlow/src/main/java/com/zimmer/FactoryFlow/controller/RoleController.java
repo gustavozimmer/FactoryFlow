@@ -1,5 +1,6 @@
 package com.zimmer.FactoryFlow.controller;
 
+import com.zimmer.FactoryFlow.dto.PermissionResponseDTO;
 import com.zimmer.FactoryFlow.dto.RoleRequestDTO;
 import com.zimmer.FactoryFlow.dto.RoleResponseDTO;
 import com.zimmer.FactoryFlow.dto.RoleUpdateDTO;
@@ -73,4 +74,9 @@ public class RoleController {
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("/{id}/permissions")
+    public List<PermissionResponseDTO> getAllPermissionsByRole(@PathVariable("id") Long id){
+
+        return roleService.getAllPermissionsByRole(id);
+    }
 }

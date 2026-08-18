@@ -1,5 +1,6 @@
 package com.zimmer.FactoryFlow.service;
 
+import com.zimmer.FactoryFlow.dto.PermissionResponseDTO;
 import com.zimmer.FactoryFlow.dto.RoleRequestDTO;
 import com.zimmer.FactoryFlow.dto.RoleResponseDTO;
 import com.zimmer.FactoryFlow.dto.RoleUpdateDTO;
@@ -14,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -92,6 +94,20 @@ public class RoleService {
 
         permissionRoleRepository.save(permissionRoleEntity);
 
+    }
+
+
+    public List<PermissionResponseDTO> getAllPermissionsByRole(Long roleId) {
+
+        return permissionRoleRepository
+                .findByRoleId(roleId)
+                .stream()
+                .map(pr -> new PermissionResponseDTO(
+                        pr.getPermission().getName(),
+                        pr.getPermission().getDescription(),
+                        pr.getPermission().getId()
+                ))
+                .toList();
     }
 
 }
