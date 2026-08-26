@@ -25,14 +25,14 @@ public class JwtService {
         SecretKey key = Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
         Date now = new Date();
         Date expiration = Date.from(Instant.now().plus(Duration.ofMinutes(expirationJwt)));
-        String jwt = Jwts.builder()
+
+        return Jwts.builder()
                 .subject(userDetails.getUsername())
                 .claim("role", userDetails.getAuthorities())
                 .issuedAt(now)
                 .expiration(expiration)
                 .signWith(key)
                 .compact();
-        return jwt;
 
     }
 
