@@ -57,6 +57,7 @@ public class UserEntity implements UserDetails {
         return List.of(new SimpleGrantedAuthority(this.role.getName()));
     }
 
+
     @Override
     public @Nullable String getPassword() {
         return passwordHash;

@@ -1,5 +1,6 @@
 package com.zimmer.FactoryFlow.service;
 
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
@@ -34,6 +35,22 @@ public class JwtService {
                 .signWith(key)
                 .compact();
 
+    }
+
+    public String extractUsername(String token){
+        try {
+            SecretKey key = Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
+            return Jwts.parser()
+                    .verifyWith(key)
+                    .build()
+                    .parseSignedClaims(token)
+                    .getPayload()
+                    .getSubject();
+
+
+        }catch (JwtException e){
+            return null;
+        }
     }
 
 }
