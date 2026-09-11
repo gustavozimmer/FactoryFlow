@@ -2,6 +2,7 @@ package com.zimmer.FactoryFlow.controller;
 
 import com.zimmer.FactoryFlow.dto.LoginResponseDTO;
 import com.zimmer.FactoryFlow.dto.LoginResquestDTO;
+import com.zimmer.FactoryFlow.service.JwtAuthenticationFilter;
 import com.zimmer.FactoryFlow.service.JwtService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,7 @@ public class AuthController {
 
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
+    private JwtAuthenticationFilter jwtAuthenticationFilter;
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDTO> login(@RequestBody @Valid LoginResquestDTO dto) {
@@ -28,7 +30,6 @@ public class AuthController {
         var authentication = authenticationManager.authenticate(authToken);
         var userDetails = (UserDetails) authentication.getPrincipal();
         var token = jwtService.generateToken(userDetails);
-
         return ResponseEntity.ok(new LoginResponseDTO(token));
     }
 }
